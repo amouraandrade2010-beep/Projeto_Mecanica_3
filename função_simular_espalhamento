@@ -1,0 +1,44 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+def simular_espalhamento(b, k, epsilon=0.1, vx0=3.0, retornar_tudo=False):
+    m = 1
+    x0 = -15
+    y0 = b
+    vy0 = 0
+    t0 = 0
+    tf = 15
+    h = 0.01
+    N = int((tf - t0) / h)
+
+    def f(r, t):
+        x, y, vx, vy = r
+        r_val = np.sqrt(x**2 + y**2)
+
+        dr_val = -k * r_val / ((r_val**2 + epsilon**2)**(3/2))
+        dvx = -dr_val * x / r_val
+        dvy = -dr_val * y / r_val
+
+        return np.array([vx, vy, dvx, dvy])
+
+    t_lista = np.zeros(N)
+    r_lista = np.zeros((N, 4))
+
+    r_lista[0] = np.array([x0, y0, vx0, vy0])
+    t_lista[0] = t0
+
+    for j in range(N - 1):
+        t_lista[j + 1] = t0 + (j + 1) * h
+        k1 = h * f(r_lista[j], t_lista[j])
+        k2 = h * f(r_lista[j] + 0.5 * k1, t_lista[j] + 0.5 * h)
+        k3 = h * f(r_lista[j] + 0.5 * k2, t_lista[j] + 0.5 * h)
+        k4 = h * f(r_lista[j] + k3, t_lista[j] + h)
+        r_lista[j + 1] = r_lista[j] + (k1 + 2 * k2 + 2 * k3 + k4) / 6
+
+    x_lista = r_lista[:, 0]
+    y_lista = r_lista[:, 1]
+
+    if retornar_tudo:
+        return r_lista
+    return r_lista[:, 0], r_lista[:, 1]
+    
