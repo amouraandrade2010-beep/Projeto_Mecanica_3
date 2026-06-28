@@ -1,0 +1,19 @@
+def grafico_variando_k(b_fixo, lista_k):
+    fig, ax = plt.subplots(figsize=(9, 7), dpi=100)
+
+    for k in lista_k:
+        x, y = simular_espalhamento(b=b_fixo, k=k)
+        ax.plot(x, y, linewidth=2, label=f'k = {k}')
+
+    ax.plot(0, 0, 'ro', markersize=8, label='Centro de Força')
+    ax.axhline(y=b_fixo, color='gray', linestyle='--', alpha=0.4, label=f'Impacto b = {b_fixo}')
+    ax.set_title(f'Multi-Espalhamento: Variando Intensidade do Potencial $k$ (b = {b_fixo})', fontsize=12, fontweight='bold', pad=12)
+    ax.set_xlabel('Posição X')
+    ax.set_ylabel('Posição Y')
+    ax.set_xlim(-18, 18)
+    ax.set_ylim(-12, 12)
+    ax.grid(True, linestyle=':', alpha=0.6)
+    ax.set_aspect('equal', 'box')
+    ax.legend(loc='upper left', frameon=True)
+    plt.show()
+
