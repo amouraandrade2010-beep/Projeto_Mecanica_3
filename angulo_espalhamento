@@ -1,0 +1,26 @@
+valores_b_num = np.linspace(0.2, 8.0, 40)
+lista_theta = []
+#varie k
+k_alvo = 10
+
+for b in valores_b_num:
+
+    r_dados = simular_espalhamento(b=b, k=k_alvo, retornar_tudo=True)
+    
+    vx_final = r_dados[-1, 2]
+    vy_final = r_dados[-1, 3]
+    
+    theta = np.degrees(np.arctan2(vy_final, vx_final))
+    lista_theta.append(theta)
+
+fig4, ax4 = plt.subplots(figsize=(6, 4), dpi=100)
+
+ax4.scatter(valores_b_num, lista_theta, color='purple', s=25, label=f'Dados Numéricos (k={k_alvo})')
+
+ax4.set_title('Ângulo de Espalhamento $\\theta$ em função de $b$', fontsize=11, fontweight='bold')
+ax4.set_xlabel('Parâmetro de Impacto (b)')
+ax4.set_ylabel('Ângulo de Espalhamento $\\theta$ (Graus)')
+ax4.grid(True, linestyle=':')
+ax4.legend(loc='upper right')
+
+plt.show()
