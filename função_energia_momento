@@ -1,0 +1,32 @@
+b_teste, k_teste, epsilon_teste = 2.5, -10, 0.1
+h = 0.01
+
+r_dados = simular_espalhamento(b=b_teste, k=k_teste, epsilon=epsilon_teste, retornar_tudo=True)
+
+x = r_dados[:, 0]
+y = r_dados[:, 1]
+vx = r_dados[:, 2]
+vy = r_dados[:, 3]
+
+r = np.sqrt(x**2 + y**2)
+v2 = vx**2 + vy**2
+t = np.arange(len(x)) * h
+
+E = 0.5 * v2 + k_teste / np.sqrt(r**2 + epsilon_teste**2)
+L = x * vy - y * vx
+
+fig1, ax1 = plt.subplots(figsize=(6, 4), dpi=100)
+ax1.plot(t, E, color='darkred', linewidth=2)
+ax1.set_title('Conservação da Energia Mecânica (E)', fontsize=11, fontweight='bold')
+ax1.set_xlabel('Tempo (t)')
+ax1.set_ylabel('Energia (E)')
+ax1.grid(True, linestyle=':')
+plt.show()
+
+fig2, ax2 = plt.subplots(figsize=(6, 4), dpi=100)
+ax2.plot(t, L, color='darkblue', linewidth=2)
+ax2.set_title('Conservação do Momento Angular (L)', fontsize=11, fontweight='bold')
+ax2.set_xlabel('Tempo (t)')
+ax2.set_ylabel('Momento Angular (L)')
+ax2.grid(True, linestyle=':')
+plt.show()
