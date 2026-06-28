@@ -1,0 +1,16 @@
+
+fig3, ax3 = plt.subplots(figsize=(6, 4), dpi=100)
+ax3.plot(t, r, color='darkgreen', linewidth=2, label='Distância r(t)')
+ax3.axvspan(4, 5, color='gray', alpha=0.2, label='Janela de Impacto (t: 4 a 5)')
+
+t_min = t[np.argmin(r)]
+r_min = np.min(r)
+ax3.plot(t_min, r_min, 'ro', label=f'Mínimo: r = {r_min:.2f} u.m.')
+
+ax3.set_title('Distância da Partícula ao Centro de Força', fontsize=11, fontweight='bold')
+ax3.set_xlabel('Tempo (t)')
+ax3.set_ylabel('Distância Total (r)')
+ax3.grid(True, linestyle=':')
+ax3.legend(loc='upper right')
+
+plt.show()
