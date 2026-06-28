@@ -1,0 +1,17 @@
+def grafico_variando_b(lista_b, k_fixo):
+    fig, ax = plt.subplots(figsize=(9, 7), dpi=100)
+
+    for b in lista_b:
+        x, y = simular_espalhamento(b=b, k=k_fixo)
+        ax.plot(x, y, linewidth=2, label=f'b = {b}')
+
+    ax.plot(0, 0, 'ro', markersize=8, label='Centro de Força')
+    ax.set_title(f'Multi-Espalhamento: Variando Parâmetro de Impacto $b$ (k = {k_fixo})', fontsize=12, fontweight='bold', pad=12)
+    ax.set_xlabel('Posição X')
+    ax.set_ylabel('Posição Y')
+    ax.set_xlim(-18, 18)
+    ax.set_ylim(-12, 12)
+    ax.grid(True, linestyle=':', alpha=0.6)
+    ax.set_aspect('equal', 'box')
+    ax.legend(loc='upper left', frameon=True)
+    plt.show()
