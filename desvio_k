@@ -1,0 +1,32 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+b_fixo = 2.0
+valores_k_abs = np.linspace(0.1, 20.0, 40)
+
+modulo_theta_repulsivo = []
+modulo_theta_atrativo = []
+
+for k_abs in valores_k_abs:
+    dados_rep = simular_espalhamento(b=b_fixo, k=k_abs, retornar_tudo=True)
+    vx_rep, vy_rep = dados_rep[-1, 2], dados_rep[-1, 3]
+    theta_rep = np.degrees(np.arctan2(vy_rep, vx_rep))
+    modulo_theta_repulsivo.append(abs(theta_rep))
+    
+    dados_atr = simular_espalhamento(b=b_fixo, k=-k_abs, retornar_tudo=True)
+    vx_atr, vy_atr = dados_atr[-1, 2], dados_atr[-1, 3]
+    theta_atr = np.degrees(np.arctan2(vy_atr, vx_atr))
+    modulo_theta_atrativo.append(abs(theta_atr))
+
+fig5, ax5 = plt.subplots(figsize=(6, 4), dpi=100)
+
+ax5.plot(valores_k_abs, modulo_theta_repulsivo, 'o-', color='orange', markersize=4, label='Potencial Repulsivo ($k > 0$)')
+ax5.plot(valores_k_abs, modulo_theta_atrativo, 'o-', color='blue', markersize=4, label='Potencial Atrativo ($k < 0$)')
+
+ax5.set_title('Magnitude do Desvio $|\\theta|$ em função de $|k|$ (b = 2)', fontsize=11, fontweight='bold')
+ax5.set_xlabel('Módulo do Parâmetro de Intensidade ($|k|$)')
+ax5.set_ylabel('Módulo do Ângulo de Espalhamento $|\\theta|$ (Graves)')
+ax5.grid(True, linestyle=':')
+ax5.legend(loc='upper left')
+
+plt.show()
